@@ -1,15 +1,15 @@
 <template>
-  <div>
-    <div class="page-title">
-      <h3>История записей</h3>
-    </div>
 
-    <div class="history-chart">
+ <v-card flat>
+    <v-card-title>
+      <h2 class="display-1">История записей</h2>      
+    </v-card-title>
+    <v-divider></v-divider>
+     <div class="history-chart">
       <canvas></canvas>
     </div>
 
-    <section>
-      <table>
+    <v-simple-table >
         <thead>
           <tr>
             <th>#</th>
@@ -28,16 +28,17 @@
             <td>12.12.32</td>
             <td>name</td>
             <td>
-              <span class="white-text badge red">Расход</span>
+              <span class="white--text badge red pa-1">Расход</span>
             </td>
             <td>
-              <button class="btn-small btn">
-                <i class="material-icons">open_in_new</i>
-              </button>
+              <v-btn small class="orange" dark>
+                <v-icon>mdi-open-in-new</v-icon>
+              </v-btn>
             </td>
           </tr>
         </tbody>
-      </table>
-    </section>
-  </div>
+      </v-simple-table>
+
+ </v-card>
+ 
 </template>

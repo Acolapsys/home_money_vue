@@ -1,47 +1,22 @@
 <template>
-  <div>
-    <div class="page-title">
-      <h3>Новая запись</h3>
-    </div>
+  <v-card flat>
+    <v-card-title>
+      <h2 class="display-1">Новая запись</h2>
+    </v-card-title>
+    <v-divider></v-divider>
 
-    <form class="form">
-      <div class="input-field">
-        <select>
-          <option>name cat</option>
-        </select>
-        <label>Выберите категорию</label>
-      </div>
+    <v-form style="max-width: 500px">
+      <v-radio-group v-model="radioGroup">
+        <v-radio label="Доход" value="income"></v-radio>
+        <v-radio label="Расход" value="outcome"></v-radio>
+      </v-radio-group>
 
-      <p>
-        <label>
-          <input class="with-gap" name="type" type="radio" value="income" />
-          <span>Доход</span>
-        </label>
-      </p>
+      <v-text-field type="number" label="Сумма" v-model="name" required>
+      </v-text-field>
 
-      <p>
-        <label>
-          <input class="with-gap" name="type" type="radio" value="outcome" />
-          <span>Расход</span>
-        </label>
-      </p>
-
-      <div class="input-field">
-        <input id="amount" type="number" />
-        <label for="amount">Сумма</label>
-        <span class="helper-text invalid">amount пароль</span>
-      </div>
-
-      <div class="input-field">
-        <input id="description" type="text" />
-        <label for="description">Описание</label>
-        <span class="helper-text invalid">description пароль</span>
-      </div>
-
-      <button class="btn waves-effect waves-light" type="submit">
-        Создать
-        <i class="material-icons right">send</i>
-      </button>
-    </form>
-  </div>
+      <v-text-field label="Описание" v-model="description" required>
+      </v-text-field>
+      <v-btn color="orange">Создать<v-icon right>mdi-send</v-icon></v-btn>
+    </v-form>
+  </v-card>
 </template>
