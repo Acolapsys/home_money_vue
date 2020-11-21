@@ -139,16 +139,16 @@
   </form> -->
 </template>
 <script>
-import { email, required, minLength } from "vuelidate/lib/validators";
+import { email, required, minLength } from 'vuelidate/lib/validators'
 export default {
-  name: "register",
+  name: 'register',
   data() {
     return {
-      email: "",
-      password: "",
-      name: "",
+      email: '',
+      password: '',
+      name: '',
       agree: false
-    };
+    }
   },
   validations: {
     email: { email, required },
@@ -157,20 +157,20 @@ export default {
     agree: { checked: v => v }
   },
   methods: {
-    submitHandler() {
+    async submitHandler() {
       if (this.$v.$invalid) {
-        this.$v.$touch();
-        return;
+        this.$v.$touch()
+        return
       }
       const formData = {
         email: this.email,
         password: this.password,
         name: this.name
-      };
-      console.log(formData);
+      }
+      await this.$store.dispatch('register', formData)
 
-      this.$router.push("/");
+      this.$router.push('/')
     }
   }
-};
+}
 </script>

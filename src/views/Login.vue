@@ -26,7 +26,7 @@
       >
 
       <v-text-field
-      type="password"
+        type="password"
         v-model="password"
         label="Password"
         id="password"
@@ -65,6 +65,7 @@
         </p>
       </v-card-actions>
     </v-form>
+    <v-snackbar v-model="snackbar">{{ alertMessage }}</v-snackbar>
   </v-card>
 
   <!-- <form class="card auth-card">
@@ -97,33 +98,47 @@
   </form> -->
 </template>
 <script>
-import { email, required, minLength } from "vuelidate/lib/validators";
+import { email, required, minLength } from 'vuelidate/lib/validators'
+import messages from '@/plugins/messages'
 export default {
-  name: "login",
+  name: 'login',
   validations: {
     email: { email, required },
     password: { required, minLength: minLength(6) }
   },
   data() {
     return {
-      email: "",
-      password: ""
-    };
+      email: '',
+      password: '',
+      snackbar: false,
+      alertMessage: ''
+    }
   },
   methods: {
-    submitHandler() {
+    async submitHandler() {
       if (this.$v.$invalid) {
-        this.$v.$touch();
-        return;
+        this.$v.$touch()
+        return
       }
       const formData = {
         email: this.email,
         password: this.password
       }
-      console.log(formData);
+      console.log(formData)
 
-      this.$router.push("/");
+      try {
+        await this.$store.dispatch('login', formData)
+        this.$router.push('/')
+      } catch (e) {
+        console.log(e.message)
+      }
+    }
+  },
+  mounted() {
+    if (messages[this.$route.query.message]) {
+      this.alertMessage = messages[this.$route.query.message]
+      this.snackbar = true
     }
   }
-};
+}
 </script>
