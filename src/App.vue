@@ -1,7 +1,10 @@
 <template>
   <v-app>
+    <container :is="layout">
+      <router-view />
+    </container>
    
-    <main-layout />
+    
     
     
    
@@ -9,19 +12,20 @@
 </template>
 
 <script>
-// import EmptyLayout from '@/layouts/EmptyLayout'
+import EmptyLayout from '@/layouts/EmptyLayout'
 import MainLayout from '@/layouts/MainLayout'
 
 export default {
   name: 'App',
   computed: {
-    // layout() {
-    // console.log(this.$route);
-    // return this.$route.meta.layout + "-layout";
-    // }
+    layout() {
+    console.log(this.$route);
+    return this.$route.meta.layout + "-layout";
+    }
   },
   components: {
-    MainLayout
+    MainLayout,
+    EmptyLayout
   }
 }
 </script>

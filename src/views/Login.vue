@@ -1,55 +1,70 @@
 <template>
-  <v-dialog v-model="dialog" persistent max-width="500px">
-    <template v-slot:activator="{ on }">
-      <v-btn outline color="teal lighten-3" dark v-on="on"
-        >Add new project</v-btn
+  <v-card style="width: 500px">
+    <v-card-title>
+      <span class="headline">Домашняя бухгалтерия</span>
+    </v-card-title>
+    <v-form ref="form" class="pa-7 text-center" @submit.prevent="submitHandler">
+      <v-text-field
+        v-model.trim="email"
+        label="E-mail"
+        id="email"
+        :class="{
+          invalid:
+            ($v.email.$dirty && !$v.email.required) ||
+            ($v.email.$dirty && $v.email.email)
+        }"
+      ></v-text-field>
+      <small
+        v-if="$v.email.$dirty && !$v.email.required"
+        class="red--text d-flex flex-start"
+        >Введите e-mail</small
       >
-    </template>
-    <v-card>
-      <v-card-title>
-        <span class="headline">Домашняя бухгалтерия</span>
-      </v-card-title>
-      <v-form ref="form" v-model="valid" lazy-validation class="pa-7 text-center">
-        <v-text-field
-          v-model="email"
-          :rules="emailRules"
-          label="E-mail"
-          required
-        ></v-text-field>
+      <small
+        v-else-if="$v.email.$dirty && !$v.email.email"
+        class="red--text d-flex flex-start"
+        >Неверный e-mail</small
+      >
 
-        <v-text-field
-          v-model="password"
-          :rules="passwordRules"
-          label="Password"
-          required
-        ></v-text-field>
+      <v-text-field
+        v-model="password"
+        label="Password"
+        id="password"
+        :class="{
+          invalid:
+            ($v.password.$dirty && !$v.password.required) ||
+            ($v.password.$dirty && $v.password.minLength)
+        }"
+      ></v-text-field>
+      <small
+        v-if="$v.password.$dirty && !$v.password.required"
+        class="red--text d-flex flex-start"
+        >Введите пароль</small
+      >
 
-        <v-divider class="mt-10"></v-divider>
-        <v-card-action>
+      <small
+        v-else-if="$v.password.$dirty && !$v.password.minLength"
+        class="red--text d-flex flex-start"
+        >Пароль должен быть не меньше
+        {{ this.$v.password.$params.minLength.min }} символов</small
+      >
 
-        <v-btn 
-          :disabled="!valid"
-          color="success"
-          class="mr-4 mt-3"
-          @click="login"
-          block
-        >
+      <v-divider class="mt-10"></v-divider>
+      <v-card-action>
+        <v-btn color="success" class="mr-4 mt-3" type="submit" block>
           Войти
           <v-icon right>mdi-send</v-icon>
-          
         </v-btn>
         <p class="center mt-3">
-        Нет аккаунта?
-        <router-link to="/register" class='orange--text text-uppercase text-decoration-none'>Зарегистрироваться</router-link>
-      </p>
-        </v-card-action>
-        
-        
-
-        
-      </v-form>
-    </v-card>
-  </v-dialog>
+          Нет аккаунта?
+          <router-link
+            to="/register"
+            class="orange--text text-uppercase text-decoration-none"
+            >Зарегистрироваться</router-link
+          >
+        </p>
+      </v-card-action>
+    </v-form>
+  </v-card>
 
   <!-- <form class="card auth-card">
     <div class="card-content">
@@ -81,12 +96,34 @@
   </form> -->
 </template>
 <script>
+import { email, required, minLength } from "vuelidate/lib/validators";
 export default {
+  name: "login",
+  validations: {
+    email: { email, required },
+    password: { required, minLength: minLength(6) }
+  },
   data() {
     return {
       valid: false,
+      email: "",
+      password: ""
+    };
+  },
+  methods: {
+    submitHandler() {
+      if (this.$v.$invalid) {
+        this.$v.$touch();
+        return;
+      }
+      const formData = {
+        email: this.email,
+        password: this.password
+      }
+      console.log(formData);
 
+      this.$router.push("/");
     }
   }
-}
+};
 </script>
