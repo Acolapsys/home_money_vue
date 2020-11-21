@@ -26,6 +26,7 @@
       >
 
       <v-text-field
+      type="password"
         v-model="password"
         label="Password"
         id="password"
@@ -49,7 +50,7 @@
       >
 
       <v-divider class="mt-10"></v-divider>
-      <v-card-action>
+      <v-card-actions class="d-flex flex-column">
         <v-btn color="success" class="mr-4 mt-3" type="submit" block>
           Войти
           <v-icon right>mdi-send</v-icon>
@@ -62,7 +63,7 @@
             >Зарегистрироваться</router-link
           >
         </p>
-      </v-card-action>
+      </v-card-actions>
     </v-form>
   </v-card>
 
@@ -105,7 +106,6 @@ export default {
   },
   data() {
     return {
-      valid: false,
       email: "",
       password: ""
     };
