@@ -44,3 +44,13 @@
     </v-container>
   </v-card>
 </template>
+<script>
+export default {
+  data() {
+    return {
+      limit: ''
+    }
+    
+  }
+}
+</script>

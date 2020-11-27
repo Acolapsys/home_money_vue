@@ -11,20 +11,21 @@ export default {
             commit('SET_PROCESSING', false)
           })
       } catch (e) {
-        console.log(e)
+        commit('setError', e)
+        // this.$router.push(`/login?message=${}`)
         throw e
       }
     },
-    async register({ dispatch }, { email, password, name }) {
+    async register({commit, dispatch }, { email, password, name }) {
       try {
         await firebase.auth().createUserWithEmailAndPassword(email, password)
-        const uid = dispatch('getUid')
-        await firebase.database.ref(`/users/${uid}/info`).set({
+        const uid = await dispatch('getUid')
+        await firebase.database().ref(`/users/${uid}/info`).set({
           bill: 10000,
           name
         })
       } catch (e) {
-        console.log(e)
+        commit('setError', e)
         throw e
       }
     },
@@ -37,26 +38,17 @@ export default {
     }
   },
   state: {
-    processing: false, // процесс загрузки
-    error: false // флаг ошибок
+    processing: false // процесс загрузки
+ 
   },
   mutations: {
     SET_PROCESSING(state, payload) {
       state.processing = payload
     },
-    SET_ERROR(state, payload) {
-      state.error = payload
-    },
-    CLEAR_ERROR(state) {
-      state.error = null
-    }
   },
   getters: {
     getProcessing: state => {
       return state.processing
-    },
-    getError: state => {
-      return state.error
     }
   }
 }
