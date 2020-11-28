@@ -1,5 +1,7 @@
 <template>
-  <div>
+<div>
+  <Loader v-if="loading"/>
+    <div v-else>
     <Navbar />
 
     <v-main class="ma-8"><router-view /> </v-main>
@@ -19,28 +21,31 @@
       </v-btn>
     </v-fab-transition>
 
-    <!-- <div class="fixed-action-btn">
-      <router-link class="btn-floating btn-large blue" to="/record">
-        <i class="large material-icons">add</i>
-      </router-link>
-    </div> -->
     <Footer />
   </div>
+</div>
 </template>
 
 <script>
 import Navbar from '@/components/app/Navbar'
 import Footer from '@/components/app/Footer'
-// import Sidebar from '@/components/app/Sidebar'
 export default {
   name: 'main-layout',
   data: () => ({
-    hidden: false
+    hidden: false,
+    loading: true
   }),
+  async mounted() {
+    if (!Object.keys(this.$store.getters.getInfo).length) {
+      await this.$store.dispatch('fetchInfo')
+      
+    }
+    this.loading = false
+  },
+
   components: {
     Navbar,
     Footer
-    // Sidebar
   }
 }
 </script>

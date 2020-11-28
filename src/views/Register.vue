@@ -143,8 +143,6 @@ export default {
 
       this.$router.push('/') 
       } catch(e) {
-       
-        console.log(e.message);
         this.alertMessage = messages[this.error.code] || 'Что-то пошло не так'
       this.snackbar = true
       }

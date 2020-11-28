@@ -14,7 +14,6 @@ export default {
   name: 'App',
   computed: {
     layout() {
-      console.log(this.$route)
       return this.$route.meta.layout + '-layout'
     }
   },

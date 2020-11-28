@@ -3,8 +3,10 @@ import Vuelidate from 'vuelidate'
 import App from './App.vue'
 import router from './router'
 import dateFilter from '@/filters/date.filter'
+import currencyFilter from '@/filters/currency.filter'
 import store from './store'
 import vuetify from './plugins/vuetify'
+import Loader from '@/components/app/Loader'
 import './registerServiceWorker'
 
 import firebase from 'firebase/app'
@@ -15,6 +17,8 @@ Vue.use(Vuelidate)
 Vue.use(firebase)
 Vue.config.productionTip = false
 Vue.filter('date', dateFilter)
+Vue.filter('currency', currencyFilter)
+Vue.component('Loader', Loader)
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCiUmoyooJI2cZO9kol6l7BU8ZVtMjbO3I',

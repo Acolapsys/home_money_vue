@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import auth from '@/store/auth'
+import info from '@/store/info'
 
 Vue.use(Vuex)
 
@@ -19,7 +20,13 @@ export default new Vuex.Store({
   getters: {
     getError: s => s.error
   },
+  actions: {
+    async fetchCurrency() {
+      const res = await fetch('https://api.exchangeratesapi.io/latest?symbols=USD,RUB')
+      return await res.json()
+    }
+  },
   modules: {
-    auth
+    auth, info
   }
 })

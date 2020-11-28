@@ -12,7 +12,7 @@
       <v-menu offset-y>
         <template v-slot:activator="{ on, attrs }">
           <v-btn class=" orange" v-bind="attrs" v-on="on" text>
-            <span>USER NAME</span>
+            <span>{{name}}</span>
             <v-icon right>mdi-menu-down</v-icon>
           </v-btn>
         </template>
@@ -42,7 +42,7 @@
           <v-avatar size="100">
             <v-img src="@/assets/avatar1.jpg"></v-img>
           </v-avatar>
-          <p class="white--text mt-1 subheading text-center">Username</p>
+          <p class="white--text mt-1 subheading text-center">{{name}}</p>
         </v-flex>
       </v-layout>
       <v-list flat>
@@ -84,6 +84,12 @@ export default {
       await this.$store.dispatch('logout')
       this.$router.push('/login?message=logout')
     }
+  },
+  computed: {
+    name() {
+      return this.$store.getters.getInfo.name
+    } 
+
   },
   mounted() {
     this.interval = setInterval(() => {

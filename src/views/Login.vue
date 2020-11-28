@@ -104,13 +104,11 @@ export default {
         email: this.email,
         password: this.password
       };
-      console.log(formData);
 
       try {
         await this.$store.dispatch("login", formData);
         this.$router.push("/");
       } catch (e) {
-        console.log(e.message);
         this.alertMessage = messages[this.error.code] || 'Что-то пошло не так'
       this.snackbar = true
       }

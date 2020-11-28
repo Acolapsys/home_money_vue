@@ -12,7 +12,6 @@ export default {
           })
       } catch (e) {
         commit('setError', e)
-        // this.$router.push(`/login?message=${}`)
         throw e
       }
     },
@@ -29,8 +28,9 @@ export default {
         throw e
       }
     },
-    async logout() {
+    async logout({commit}) {
       await firebase.auth().signOut()
+      commit('clearInfo')
     },
     getUid() {
       const user = firebase.auth().currentUser

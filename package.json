@@ -51,6 +51,7 @@
       "parser": "babel-eslint"
     },
     "rules": {
+      
       "prettier/prettier": [
         "warn",
         {
