@@ -7,7 +7,13 @@
     <v-container fluid>
       <v-row>
         <CategoryCreate @created="addNewCategory"/>
-        <CategoryEdit />
+        <CategoryEdit 
+        v-if="categories.length"
+        @updated="updateCategory"
+        :categories="categories"/>
+        <v-col v-else sm="12" md="6">
+        <p class=" pa-4 headline text--secondary text-center">Категорий пока нет</p>
+        </v-col>
         
       </v-row>
     </v-container>
@@ -21,24 +27,23 @@ export default {
     return {
       categories: [],
       loading: true
-
-       
     }
-    
   },
   components: {
     CategoryCreate, CategoryEdit
   },
   async mounted() {
     this.categories = await this.$store.dispatch('fetchCategories')
-    console.log(this.categories);
     this.loading = false
-
   },
   methods: {
     addNewCategory(category) {
       this.categories.push(category)
-      console.log(this.categories);
+    },
+    updateCategory(category) {
+      const id = this.categories.findIndex(el => el.id === category.id)
+      this.categories[id].title = category.title
+      this.categories[id].limit = category.limit
     }
   }
 }
