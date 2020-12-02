@@ -3,15 +3,64 @@
     <v-card-title>
       <h2 class="display-1">Планирование</h2>
       <v-spacer></v-spacer>
-      <h4 class="display-1">12 212</h4>
+      <h4 class="display-1">{{ getInfo.bill | currency("RUB") }}</h4>
     </v-card-title>
     <v-divider></v-divider>
-    <v-card-text>
+
+    <Loader v-if="loading" />
+
+    <p v-else-if="!categories.length" class="text-center pt-5">
+      Категорий пока нет.
+      <router-link to="/categories">Добавить новую категорию</router-link>
+    </p>
+    <v-card-text v-else v-for="cat of categories" :key="cat.id">
       <p>
-        <strong>Девушка:</strong>
-        12 122 из 14 0000
+        <strong>{{cat.title}}:</strong>
+        {{cat.spend | currency}} из {{cat.limit | currency}}
       </p>
-      <v-progress-linear value="80"></v-progress-linear>
+      <v-tooltip top>
+      <template v-slot:activator="{ on, attrs }">
+      <v-progress-linear :color="cat.progressColor" :value="cat.progressPercent" v-bind="attrs"
+          v-on="on"/>
+          </template>
+      <span>{{cat.tooltip}}</span>
+      </v-tooltip>
     </v-card-text>
   </v-card>
 </template>
+<script>
+import { mapGetters } from "vuex";
+import currencyFilter from '@/filters/currency.filter'
+export default {
+  name: "planning",
+  data: () => ({
+    categories: [],
+    loading: true
+  }),
+  computed: {
+    ...mapGetters(["getInfo"])
+  },
+  async mounted() {
+    const records = await this.$store.dispatch("fetchRecords");
+    const categories = await this.$store.dispatch("fetchCategories");
+    this.categories = categories.map(cat => {
+      const spend = records
+        .filter(r => r.categoryId === cat.id)
+        .filter(r => r.type === "outcome")
+        .reduce((total, rec) => total + rec.amount, 0);
+      const percent = (spend * 100) / cat.limit;
+      const progressPercent = percent > 100 ? 100 : percent;
+      const progressColor =
+        percent < 60 ? "green" : percent < 100 ? "yellow" : "red";
+
+      const tooltipValue = cat.limit - spend
+      const tooltip = `${tooltipValue >= 0 ? "Осталось" : "Превышение на"} ${currencyFilter(Math.abs(tooltipValue))}`
+
+      return { ...cat, progressPercent, progressColor, spend, tooltip };
+    });
+  
+
+    this.loading = false;
+  }
+};
+</script>

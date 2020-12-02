@@ -5,12 +5,24 @@ export default {
 
             try {
                 const uid = await dispatch('getUid')
-                return await firebase.database().ref(`/users/${uid}/reсords`).push(record)
+                return await firebase.database().ref(`/users/${uid}/records`).push(record)
             }
             catch (e) {
                 commit('setError', e)
                 throw e
             }
-        }
+        },
+        async fetchRecords({commit, dispatch}) {
+            try {
+                const uid = await dispatch('getUid')
+                console.log(uid);
+                const records = (await firebase.database().ref(`/users/${uid}/records`).once('value')).val() || {}
+                console.log(records);          
+                return Object.keys(records).map(key => ({...records[key], id: key}))
+            } catch(e) {
+                commit('setError', e)
+                throw e
+            }
+        },
     }
 }
