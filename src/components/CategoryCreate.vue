@@ -18,7 +18,7 @@
           label="Лимит"
           v-model.number="limit"
           required
-          :class="{ invalid: $v.limit.$dirty && !$v.limit.minLimit }"
+          :class="{ invalid: $v.limit.$dirty && !$v.limit.minValue }"
           :error-messages="limitError"
         >
         </v-text-field>
