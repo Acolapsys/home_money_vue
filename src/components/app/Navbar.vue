@@ -4,7 +4,7 @@
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
       <router-link to="/" tag="span" style="cursor: pointer">
         <v-toolbar-title class="text-uppercase">
-          <span class="font-weight-light"> {{ date | date('date') }}</span>
+          <span class="font-weight-light"> {{ date | date('datetime') }}</span>
         </v-toolbar-title>
       </router-link>
       <v-spacer />
