@@ -93,7 +93,12 @@ export default {
       return this.$store.getters.getError
     }
   },
-
+  mounted() {
+    if (messages[this.$route.query.message]) {
+      this.alertMessage = messages[this.$route.query.message]
+      this.snackbar = true
+    }
+  },
   methods: {
     async submitHandler() {
       if (this.$v.$invalid) {
