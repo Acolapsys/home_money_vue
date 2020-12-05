@@ -8,34 +8,38 @@
       <canvas></canvas>
     </div>
 
-    <v-simple-table>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Сумма</th>
-          <th>Дата</th>
-          <th>Категория</th>
-          <th>Тип</th>
-          <th>Открыть</th>
-        </tr>
-      </thead>
+    <Loader v-if="loading" />
 
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>1212</td>
-          <td>12.12.32</td>
-          <td>name</td>
-          <td>
-            <span class="white--text badge red pa-1">Расход</span>
-          </td>
-          <td>
-            <v-btn small class="orange" dark>
-              <v-icon>mdi-open-in-new</v-icon>
-            </v-btn>
-          </td>
-        </tr>
-      </tbody>
-    </v-simple-table>
+    <p v-else-if="!records.length" class="text-center pt-5">
+      Записей пока нет.
+      <router-link to="/record">Добавить новую запись</router-link>
+    </p>
+
+    <HistoryTable v-else :records="records" />
   </v-card>
 </template>
+<script>
+import HistoryTable from "@/components/HistoryTable";
+export default {
+  name: "history",
+  components: {
+    HistoryTable
+  },
+  data: () => ({
+    loading: true,
+    records: [],
+    categories: []
+  }),
+  async mounted() {
+    const records = await this.$store.dispatch("fetchRecords");
+    this.categories = await this.$store.dispatch("fetchCategories");
+    this.records = records.map(r => ({
+      ...r,
+      categoryName: this.categories.find(c => c.id === r.categoryId).title,
+      typeClass: r.type === 'income' ? 'green' : 'red',
+      typeText: r.type === 'income' ? 'Доход' : 'Расход'
+    }))
+    this.loading = false
+  }
+};
+</script>
