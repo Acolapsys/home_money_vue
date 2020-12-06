@@ -40,7 +40,7 @@ export default {
         {
           text: "История",
           disabled: false,
-          href: "history"
+          href: "/history"
         },
         {
           text: this.record.typeText,
