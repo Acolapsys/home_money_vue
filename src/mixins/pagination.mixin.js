@@ -16,9 +16,6 @@ export default {
             this.allItems = _.chunk(allItems, this.pageSize)
             this.pageCount = _.size(this.allItems)
             this.items = this.allItems[this.page - 1] || this.allItems[0]
-        },
-        pageChangeHandler() {
-            this.$router.push(`${this.$route.path}/page=${this.page}`)
         }
     },
     computed: {
