@@ -4,9 +4,7 @@
       <h2 class="display-1">История записей</h2>
     </v-card-title>
     <v-divider></v-divider>
-    <div class="history-chart">
-      <GChart type="PieChart" :data="chartData" :options="chartOptions" />
-    </div>
+    
 
     <Loader v-if="loading" />
 
@@ -14,8 +12,12 @@
       Записей пока нет.
       <router-link to="/record">Добавить новую запись</router-link>
     </p>
+    <div v-else class="history-chart">
+      <GChart type="PieChart" :data="chartData" :options="chartOptions" />
+    
 
-    <HistoryTable v-else :records="items" />
+    <HistoryTable  :records="items" />
+    </div>
     <v-pagination
       class="pt-10"
       v-model="page"

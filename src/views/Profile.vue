@@ -1,7 +1,7 @@
 <template>
   <v-card flat>
     <v-card-title>
-      <h3 class="display-1">Профиль</h3>
+      <h3 class="display-1">{{'ProfileTitle' | localize}}</h3>
     </v-card-title>
     <v-divider></v-divider>
 
@@ -14,7 +14,7 @@
         :error-messages="nameError"
       >
       </v-text-field>
-      <v-radio-group v-model="radios" mandatory>
+      <v-radio-group v-model="locale" mandatory row>
         <v-radio label="Русский" value="russian"></v-radio>
         <v-radio label="English" value="english"></v-radio>
       </v-radio-group>
@@ -27,15 +27,16 @@
 
 <script>
 import { required } from 'vuelidate/lib/validators'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'profile',
   data: () => ({
     name: '',
-    radios: 'russian'
+    locale: 'russian'
   }),
   mounted() {
     this.name = this.getInfo.name
+    this.locale = this.getInfo.locale
   },
   validations: {
     name: { required }
@@ -50,10 +51,21 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['updateInfo']),
     async submitHandler() {
       if (this.$v.$invalid) {
         this.$v.$touch()
         return
+      }
+      try {
+        await this.updateInfo({
+          name: this.name,
+          locale: this.locale
+        })
+      }
+      catch(e) {
+        console.log(e)
+
       }
     }
   }

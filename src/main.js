@@ -4,6 +4,7 @@ import App from './App.vue'
 import router from './router'
 import dateFilter from '@/filters/date.filter'
 import currencyFilter from '@/filters/currency.filter'
+import localizeFilter from '@/filters/localize.filter'
 import store from './store'
 import vuetify from './plugins/vuetify'
 import Loader from '@/components/app/Loader'
@@ -18,6 +19,7 @@ Vue.use(firebase)
 Vue.config.productionTip = false
 Vue.filter('date', dateFilter)
 Vue.filter('currency', currencyFilter)
+Vue.filter('localize', localizeFilter)
 Vue.component('Loader', Loader)
 
 const firebaseConfig = {
