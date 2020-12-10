@@ -1,7 +1,7 @@
 <template>
   <v-card flat>
     <v-card-title>
-      <h2 class="display-1">Категории</h2>
+      <h2 class="display-1">{{'Category' | localize}}</h2>
     </v-card-title>
     <v-divider></v-divider>
     <v-container fluid>
@@ -12,7 +12,7 @@
         @updated="updateCategory"
         :categories="categories"/>
         <v-col v-else sm="12" md="6">
-        <p class=" pa-4 headline text--secondary text-center">Категорий пока нет</p>
+        <p class=" pa-4 headline text--secondary text-center">{{'Message_NoCategories' | localize}}</p>
         </v-col>
         
       </v-row>

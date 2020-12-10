@@ -2,11 +2,11 @@
   <v-col sm="12" md="6">
     <v-card height="310px" class="pa-4" flat>
       <v-card-subtitle class="font-weight-light ">
-        <span class="display-1">Создать</span>
+        <span class="display-1">{{'Create' | localize}}</span>
       </v-card-subtitle>
       <v-form @submit.prevent="submitHandler">
         <v-text-field
-          label="Название"
+          :label="'Title' | localize"
           v-model="title"
           required
           :class="{ invalid: $v.title.$dirty && !$v.title.required }"
@@ -15,7 +15,7 @@
         </v-text-field>
 
         <v-text-field
-          label="Лимит"
+          :label="'Limit' | localize"
           v-model.number="limit"
           required
           :class="{ invalid: $v.limit.$dirty && !$v.limit.minValue }"
@@ -24,7 +24,7 @@
         </v-text-field>
 
         <v-btn class="mt-5" color="success" type="submit"
-          >Создать<v-icon right>mdi-send</v-icon></v-btn
+          >{{'Create' | localize}}<v-icon right>mdi-send</v-icon></v-btn
         >
       </v-form>
     </v-card>
@@ -33,7 +33,8 @@
 </template>
 
 <script>
-import { required, minValue } from "vuelidate/lib/validators";
+import { required, minValue } from "vuelidate/lib/validators"
+import localizeFilter from '@/filters/localize.filter'
 export default {
   data() {
     return {
@@ -61,7 +62,7 @@ export default {
         this.title = ''
         this.limit = 100
         this.$v.$reset()
-        this.alertMessage = "Категория создана"
+        this.alertMessage = localizeFilter('Message_CategoryCreated')
         this.snackbar = true
         this.$emit('created', category)
       } catch (e) {
@@ -72,13 +73,13 @@ export default {
   computed: {
     titleError() {
       if (this.$v.title.$dirty && !this.$v.title.required) {
-        return "Введите название категории";
+        return localizeFilter("Message_EnterCategoryTitle");
       }
       return "";
     },
     limitError() {
       if (this.$v.limit.$dirty && !this.$v.limit.minValue) {
-        return "Минимальное значение " + this.$v.limit.$params.minValue.min;
+        return localizeFilter("Message_MinValue") + this.$v.limit.$params.minValue.min;
       }
       return "";
     }

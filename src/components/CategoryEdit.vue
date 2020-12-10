@@ -2,13 +2,13 @@
   <v-col sm="12" md="6">
     <v-card height="310px" class="pa-4" flat>
       <v-card-subtitle class="font-weight-light ">
-        <span class="display-1">Редактировать</span>
+        <span class="display-1">{{'Edit' | localize}}</span>
       </v-card-subtitle>
       <v-form @submit.prevent="submitHandler">
-        <v-select :items="categories" item-text="title" item-value="limit" return-object v-model="select" label="Название"></v-select>
+        <v-select :items="categories" item-text="title" item-value="limit" return-object v-model="select" :label="'Title' | localize"></v-select>
 
         <v-text-field
-          label="Название"
+          :label="'Title' | localize"
           v-model="title"
           required
           :class="{ invalid: $v.title.$dirty && !$v.title.required }"
@@ -17,7 +17,7 @@
         </v-text-field>
 
         <v-text-field
-          label="Лимит"
+          :label="'Limit' | localize"
           v-model.number="limit"
           required
           :class="{ invalid: $v.limit.$dirty && !$v.limit.minValue }"
@@ -26,7 +26,7 @@
         </v-text-field>
 
  
-        <v-btn class="mt-5" color="success" type="submit">Обновить<v-icon right>mdi-send</v-icon></v-btn>
+        <v-btn class="mt-5" color="success" type="submit">{{'Update' | localize}}<v-icon right>mdi-send</v-icon></v-btn>
       </v-form>
     </v-card>
          <v-snackbar v-model="snackbar">{{ alertMessage }}</v-snackbar>
@@ -35,6 +35,8 @@
 
 <script>
 import { required, minValue } from "vuelidate/lib/validators";
+
+import localizeFilter from '@/filters/localize.filter'
 export default {
   props: ["categories"],
   data: () => ({
@@ -57,13 +59,13 @@ export default {
   computed: {
     titleError() {
       if (this.$v.title.$dirty && !this.$v.title.required) {
-        return "Введите название категории";
+        return localizeFilter("Message_EnterCategoryTitle");
       }
       return "";
     },
     limitError() {
       if (this.$v.limit.$dirty && !this.$v.limit.minValue) {
-        return "Минимальное значение " + this.$v.limit.$params.minValue.min;
+        return localizeFilter("Message_MinValue") + this.$v.limit.$params.minValue.min;
       }
       return "";
     }

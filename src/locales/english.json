@@ -12,5 +12,25 @@
     "Menu_Planning": "Planning",
     "Menu_Record": "New record",
     "Menu_History": "History",
-    "Menu_Categories": "Categories"
+    "Menu_Categories": "Categories",
+    "Create": "Create",
+    "Title": "Title",
+    "Limit": "Limit",
+    "Category": "Category",
+    "Message_CategoryCreated": "Category created succesful",
+    "Message_EnterCategoryTitle": "Enter category title",
+    "Message_MinValue": "Min value is ",
+    "Edit": "Edit",
+    "Amount": "Amount",
+    "Message_NoCategories": "No categories",
+    "Message_RecordWith": "Record with ",
+    "Message_NotFound": " not found",
+    "Income": "Income",
+    "Outcome": "Outcome",
+    "History_Title": "Records history",
+    "Message_NoRecords": "No records.",
+    "AddNewRecord": "Add new record",
+    "Chart_Title": "Outcomes",
+    "Chart_Subtitle": "Outcome by category"
+
 }

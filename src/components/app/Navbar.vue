@@ -54,7 +54,7 @@
             <v-icon left>{{ link.icon }}</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>{{ link.title }}</v-list-item-title>
+            <v-list-item-title>{{ link.title | localize }}</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -64,18 +64,17 @@
 </template>
 
 <script>
-import localizeFilter from '@/filters/localize.filter'
 export default {
   data: () => ({
     date: new Date(),
     interval: null,
     drawer: true,
     links: [
-      { icon: "mdi-view-dashboard", title: localizeFilter('Menu_Bill'), url: "/", exact: true },
-      { icon: "mdi-history", title: localizeFilter('Menu_History'), url: "/history" },
-      { icon: "mdi-notebook", title: localizeFilter('Menu_Planning'), url: "/planning" },
-      { icon: "mdi-plus-circle", title: localizeFilter('Menu_Record'), url: "/record" },
-      { icon: "mdi-view-list", title: localizeFilter('Menu_Categories'), url: "/categories" }
+      { icon: "mdi-view-dashboard", title: 'Menu_Bill', url: "/", exact: true },
+      { icon: "mdi-history", title: 'Menu_History', url: "/history" },
+      { icon: "mdi-notebook", title: 'Menu_Planning', url: "/planning" },
+      { icon: "mdi-plus-circle", title: 'Menu_Record', url: "/record" },
+      { icon: "mdi-view-list", title: 'Menu_Categories', url: "/categories" }
     ]
   }),
   methods: {

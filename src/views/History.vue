@@ -1,7 +1,7 @@
 <template>
   <v-card flat>
     <v-card-title>
-      <h2 class="display-1">История записей</h2>
+      <h2 class="display-1">{{"History_Title" | localize}}</h2>
     </v-card-title>
     <v-divider></v-divider>
     
@@ -9,8 +9,8 @@
     <Loader v-if="loading" />
 
     <p v-else-if="!records.length" class="text-center pt-5">
-      Записей пока нет.
-      <router-link to="/record">Добавить новую запись</router-link>
+      {{"Message_NoRecords" | localize}}
+      <router-link to="/record">{{"AddNewRecord" | localize}}</router-link>
     </p>
     <div v-else class="history-chart">
       <GChart type="PieChart" :data="chartData" :options="chartOptions" />
@@ -30,6 +30,7 @@
 import { GChart } from "vue-google-charts";
 import HistoryTable from "@/components/HistoryTable";
 import paginationMixin from "@/mixins/pagination.mixin";
+import localizeFilter from '@/filters/localize.filter'
 export default {
   name: "history",
   mixins: [paginationMixin],
@@ -43,8 +44,8 @@ export default {
     chartData: [],
     chartOptions: {
       chart: {
-        title: "Диаграмма расходов",
-        subtitle: "Расходы по категориям"
+        title: localizeFilter("Chart_Title"),
+        subtitle: localizeFilter("Chart_Subtitle")
       }
     }
   }),
@@ -62,7 +63,7 @@ export default {
           ...r,
           categoryName: categories.find(c => c.id === r.categoryId).title,
           typeClass: r.type === "income" ? "green" : "red",
-          typeText: r.type === "income" ? "Доход" : "Расход"
+          typeText: r.type === "income" ? localizeFilter("Income") : localizeFilter("Outcome")
         }))
       );
       this.chartData = [['Category', 'Outcome'], ...categories.map(el => {

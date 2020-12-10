@@ -2,13 +2,31 @@
     "": "",
     "ProfileTitle": "Профиль",
     "Name": "Имя",
-
     "Message_EnterName": "Введите имя",
     "Update": "Обновить",
     "Menu_Bill": "Счет",
     "Menu_Planning": "Планирование",
     "Menu_Record": "Новая запись",
     "Menu_History": "История",
-    "Menu_Categories": "Категории"
+    "Menu_Categories": "Категории",
+    "Create": "Создать",
+    "Title": "Название",
+    "Amount": "Сумма",
+    "Limit": "Лимит",
+    "Category": "Категория",
+    "Message_CategoryCreated": "Категория создана успешно",
+    "Message_EnterCategoryTitle": "Введите название категории",
+    "Message_MinValue": "Минимальное значение ",
+    "Edit": "Редактировать",
+    "Message_NoCategories": "Категорий пока нет",
+    "Message_RecordWith": "Запись с ",
+    "Message_NotFound": " не найдена",
+    "Income": "Доход",
+    "Outcome": "Расход",
+    "History_Title": "История записей",
+    "Message_NoRecords": "Записей пока нет.",
+    "AddNewRecord": "Добавить новую запись",
+    "Chart_Title": "Диаграмма расходов",
+    "Chart_Subtitle": "Расходы по категориям"
 
 }

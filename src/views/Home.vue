@@ -1,7 +1,7 @@
 <template>
   <v-card flat>
     <v-card-title>
-      <h2 class="display-1">Счет</h2>
+      <h2 class="display-1">{{'Menu_Bill' | localize}}</h2>
       <v-spacer></v-spacer>
       <v-btn color="light-blue" dark @click="refresh">
         <v-icon>mdi-refresh</v-icon>
