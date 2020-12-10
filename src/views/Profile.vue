@@ -7,7 +7,7 @@
 
     <v-form style="max-width: 500px" @submit.prevent="submitHandler">
       <v-text-field
-        label="Имя"
+        :label="'Name' | localize"
         v-model="name"
         required
         :class="{ invalid: $v.name.$dirty && !$v.name.required }"
@@ -19,7 +19,7 @@
         <v-radio label="English" value="english"></v-radio>
       </v-radio-group>
       <v-btn class="mt-5" color="success" type="submit"
-        >Обновить<v-icon right>mdi-send</v-icon></v-btn
+        >{{'Update' | localize}}<v-icon right>mdi-send</v-icon></v-btn
       >
     </v-form>
   </v-card>
@@ -27,6 +27,7 @@
 
 <script>
 import { required } from 'vuelidate/lib/validators'
+import localizeFilter from '@/filters/localize.filter'
 import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'profile',
@@ -45,7 +46,7 @@ export default {
     ...mapGetters(['getInfo']),
     nameError() {
       if (this.$v.name.$dirty && !this.$v.name.required) {
-        return 'Введите имя'
+        return localizeFilter('Message_EnterName')
       }
       return ''
     }

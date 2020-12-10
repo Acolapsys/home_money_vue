@@ -19,7 +19,7 @@
         <v-list flat>
           <v-list-item router to="/profile" active-class="border">
             <v-icon left>mdi-account</v-icon>
-            <v-list-item-title>Профиль</v-list-item-title>
+            <v-list-item-title>{{'ProfileTitle' | localize}}</v-list-item-title>
           </v-list-item>
           <v-list-item text @click.stop="logout">
             
@@ -31,8 +31,9 @@
         </v-list>
       </v-menu>
     </v-app-bar>
+    <div :key="locale">
 
-    <v-navigation-drawer v-model="drawer" app dark class="orange darken-2">
+    <v-navigation-drawer v-model="drawer" app  dark class="orange darken-2" >
       <v-layout column align-center>
         <v-flex class="mt-5">
           <v-avatar size="100">
@@ -41,7 +42,7 @@
           <p class="white--text mt-1 subheading text-center">{{ name }}</p>
         </v-flex>
       </v-layout>
-      <v-list flat>
+      <v-list flat >
         <v-list-item
           v-for="link in links"
           :key="link.title"
@@ -58,21 +59,23 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
+    </div>
   </nav>
 </template>
 
 <script>
+import localizeFilter from '@/filters/localize.filter'
 export default {
   data: () => ({
     date: new Date(),
     interval: null,
     drawer: true,
     links: [
-      { icon: "mdi-view-dashboard", title: "Счет", url: "/", exact: true },
-      { icon: "mdi-history", title: "История", url: "/history" },
-      { icon: "mdi-notebook", title: "Планирование", url: "/planning" },
-      { icon: "mdi-plus-circle", title: "Новая запись", url: "/record" },
-      { icon: "mdi-view-list", title: "Категории", url: "/categories" }
+      { icon: "mdi-view-dashboard", title: localizeFilter('Menu_Bill'), url: "/", exact: true },
+      { icon: "mdi-history", title: localizeFilter('Menu_History'), url: "/history" },
+      { icon: "mdi-notebook", title: localizeFilter('Menu_Planning'), url: "/planning" },
+      { icon: "mdi-plus-circle", title: localizeFilter('Menu_Record'), url: "/record" },
+      { icon: "mdi-view-list", title: localizeFilter('Menu_Categories'), url: "/categories" }
     ]
   }),
   methods: {
@@ -84,6 +87,9 @@ export default {
   computed: {
     name() {
       return this.$store.getters.getInfo.name;
+    },
+    locale() {
+      return this.$store.getters.getInfo.locale
     }
   },
   mounted() {
