@@ -2,7 +2,7 @@
   <v-col sm="12" md="6">
     <v-card height="310px" class="pa-4" flat>
       <v-card-subtitle class="font-weight-light ">
-        <span class="display-1">{{'Create' | localize}}</span>
+        <span class="display-1">{{ 'Create' | localize }}</span>
       </v-card-subtitle>
       <v-form @submit.prevent="submitHandler">
         <v-text-field
@@ -24,25 +24,25 @@
         </v-text-field>
 
         <v-btn class="mt-5" color="success" type="submit"
-          >{{'Create' | localize}}<v-icon right>mdi-send</v-icon></v-btn
+          >{{ 'Create' | localize }}<v-icon right>mdi-send</v-icon></v-btn
         >
       </v-form>
     </v-card>
-     <v-snackbar v-model="snackbar">{{ alertMessage }}</v-snackbar>
+    <v-snackbar v-model="snackbar">{{ alertMessage }}</v-snackbar>
   </v-col>
 </template>
 
 <script>
-import { required, minValue } from "vuelidate/lib/validators"
+import { required, minValue } from 'vuelidate/lib/validators'
 import localizeFilter from '@/filters/localize.filter'
 export default {
   data() {
     return {
-      title: "",
+      title: '',
       limit: 100,
       snackbar: false,
-      alertMessage: ""
-    };
+      alertMessage: ''
+    }
   },
   validations: {
     title: { required },
@@ -51,14 +51,14 @@ export default {
   methods: {
     async submitHandler() {
       if (this.$v.$invalid) {
-        this.$v.$touch();
-        return;
+        this.$v.$touch()
+        return
       }
       try {
-        const category = await this.$store.dispatch("createCategory", {
+        const category = await this.$store.dispatch('createCategory', {
           title: this.title,
           limit: this.limit
-        });
+        })
         this.title = ''
         this.limit = 100
         this.$v.$reset()
@@ -66,23 +66,26 @@ export default {
         this.snackbar = true
         this.$emit('created', category)
       } catch (e) {
-        console.log(e);
+        console.log(e)
       }
     }
   },
   computed: {
     titleError() {
       if (this.$v.title.$dirty && !this.$v.title.required) {
-        return localizeFilter("Message_EnterCategoryTitle");
+        return localizeFilter('Message_EnterCategoryTitle')
       }
-      return "";
+      return ''
     },
     limitError() {
       if (this.$v.limit.$dirty && !this.$v.limit.minValue) {
-        return localizeFilter("Message_MinValue") + this.$v.limit.$params.minValue.min;
+        return (
+          localizeFilter('Message_MinValue') +
+          this.$v.limit.$params.minValue.min
+        )
       }
-      return "";
+      return ''
     }
   }
-};
+}
 </script>

@@ -1,7 +1,7 @@
 <template>
   <v-card style="width: 500px">
     <v-card-title>
-      <span class="headline">Домашняя бухгалтерия</span>
+      <span class="headline">{{ 'HomeBookkeeping' | localize }}</span>
     </v-card-title>
     <v-form ref="form" @submit.prevent="submitHandler" class="pa-7 text-center">
       <v-text-field
@@ -17,18 +17,18 @@
       <small
         v-if="$v.email.$dirty && !$v.email.required"
         class="red--text d-flex flex-start"
-        >Введите e-mail</small
+        >{{ 'Message_EnterEmail' | localize }}</small
       >
       <small
         v-else-if="$v.email.$dirty && !$v.email.email"
         class="red--text d-flex flex-start"
-        >Неверный e-mail</small
+        >{{ 'Message_WrongEmail' | localize }}</small
       >
 
       <v-text-field
         type="password"
         v-model="password"
-        label="Password"
+        :label="'Password' | localize"
         id="password"
         :class="{
           invalid:
@@ -39,19 +39,20 @@
       <small
         v-if="$v.password.$dirty && !$v.password.required"
         class="red--text d-flex flex-start"
-        >Введите пароль</small
+        >{{ 'Message_EnterPassword' | localize }}</small
       >
       <small
         v-else-if="$v.password.$dirty && !$v.password.minLength"
         class="red--text d-flex flex-start"
-        >Пароль должен быть не меньше
-        {{ this.$v.password.$params.minLength.min }} символов</small
+        >{{ 'Message_PasswordMinLength' | localize }}
+        {{ this.$v.password.$params.minLength.min
+        }}{{ 'Message_Signs' | localize }}</small
       >
 
       <v-text-field
         id="name"
         v-model="name"
-        label="Имя"
+        :label="'Name' | localize"
         :class="{
           invalid: $v.name.$dirty && !$v.name.required
         }"
@@ -59,12 +60,12 @@
       <small
         v-if="$v.name.$dirty && !$v.name.required"
         class="red--text d-flex flex-start"
-        >Введите имя</small
+        >{{ 'Message_EnterName' | localize }}</small
       >
 
       <v-checkbox
         v-model="agree"
-        label="С правилами согласен"
+        :label="'Message_Agreement' | localize"
         :class="{
           invalid: $v.agree.$dirty && !$v.agree.checked
         }"
@@ -72,7 +73,7 @@
       <small
         v-if="$v.agree.$dirty && !$v.agree.checked"
         class="red--text d-flex flex-start"
-        >Согласитесь с правилами</small
+        >{{ 'Message_NeedToAgree' | localize }}</small
       >
 
       <v-divider class="mt-2"></v-divider>
@@ -83,27 +84,32 @@
           block
           type="submit"
         >
-          Зарегистрироваться
+          {{ 'Message_SignUp' | localize }}
           <v-icon right>mdi-send</v-icon>
         </v-btn>
         <p class="center mt-3">
-          Нет аккаунта?
+          {{ 'Message_NeedAnAccount' | localize }}
           <router-link
             to="/login"
             class="orange--text text-uppercase text-decoration-none"
-            >Войти</router-link
+            >{{ 'Login' | localize }}</router-link
           >
         </p>
       </v-card-actions>
     </v-form>
-        <v-snackbar v-model="snackbar">{{ alertMessage }}</v-snackbar>
+    <v-snackbar v-model="snackbar">{{ alertMessage }}</v-snackbar>
   </v-card>
-
- </template>
+</template>
 <script>
 import { email, required, minLength } from 'vuelidate/lib/validators'
 import messages from '@/plugins/messages'
+import localizeFilter from '@/filters/localize.filter'
 export default {
+  metaInfo() {
+    return {
+      title: this.$title('Message_SignUp')
+    }
+  },
   name: 'register',
   data() {
     return {
@@ -111,11 +117,11 @@ export default {
       password: '',
       name: '',
       agree: false,
-            snackbar: false,
-      alertMessage: ""
+      snackbar: false,
+      alertMessage: ''
     }
   },
-   computed: {
+  computed: {
     error() {
       return this.$store.getters.getError
     }
@@ -139,12 +145,14 @@ export default {
       }
 
       try {
-      await this.$store.dispatch('register', formData)
+        await this.$store.dispatch('register', formData)
 
-      this.$router.push('/') 
-      } catch(e) {
-        this.alertMessage = messages[this.error.code] || 'Что-то пошло не так'
-      this.snackbar = true
+        this.$router.push('/')
+      } catch (e) {
+        this.alertMessage =
+          messages[this.error.code] ||
+          localizeFilter('Message_SomethingWentWrong')
+        this.snackbar = true
       }
     }
   }

@@ -1,7 +1,7 @@
 <template>
   <v-card flat>
     <v-card-title>
-      <h3 class="display-1">{{'ProfileTitle' | localize}}</h3>
+      <h3 class="display-1">{{ 'ProfileTitle' | localize }}</h3>
     </v-card-title>
     <v-divider></v-divider>
 
@@ -19,7 +19,7 @@
         <v-radio label="English" value="english"></v-radio>
       </v-radio-group>
       <v-btn class="mt-5" color="success" type="submit"
-        >{{'Update' | localize}}<v-icon right>mdi-send</v-icon></v-btn
+        >{{ 'Update' | localize }}<v-icon right>mdi-send</v-icon></v-btn
       >
     </v-form>
   </v-card>
@@ -31,6 +31,11 @@ import localizeFilter from '@/filters/localize.filter'
 import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'profile',
+  metaInfo() {
+    return {
+      title: this.$title('ProfileTitle')
+    }
+  },
   data: () => ({
     name: '',
     locale: 'russian'
@@ -63,10 +68,8 @@ export default {
           name: this.name,
           locale: this.locale
         })
-      }
-      catch(e) {
+      } catch (e) {
         console.log(e)
-
       }
     }
   }

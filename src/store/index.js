@@ -24,11 +24,16 @@ export default new Vuex.Store({
   },
   actions: {
     async fetchCurrency() {
-      const res = await fetch('https://api.exchangeratesapi.io/latest?symbols=USD,RUB')
+      const res = await fetch(
+        'https://api.exchangeratesapi.io/latest?symbols=USD,RUB'
+      )
       return await res.json()
     }
   },
   modules: {
-    auth, info, category, record
+    auth,
+    info,
+    category,
+    record
   }
 })

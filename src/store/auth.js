@@ -15,20 +15,23 @@ export default {
         throw e
       }
     },
-    async register({commit, dispatch }, { email, password, name }) {
+    async register({ commit, dispatch }, { email, password, name }) {
       try {
         await firebase.auth().createUserWithEmailAndPassword(email, password)
         const uid = await dispatch('getUid')
-        await firebase.database().ref(`/users/${uid}/info`).set({
-          bill: 10000,
-          name
-        })
+        await firebase
+          .database()
+          .ref(`/users/${uid}/info`)
+          .set({
+            bill: 10000,
+            name
+          })
       } catch (e) {
         commit('setError', e)
         throw e
       }
     },
-    async logout({commit}) {
+    async logout({ commit }) {
       await firebase.auth().signOut()
       commit('clearInfo')
     },
@@ -39,12 +42,11 @@ export default {
   },
   state: {
     processing: false // процесс загрузки
- 
   },
   mutations: {
     SET_PROCESSING(state, payload) {
       state.processing = payload
-    },
+    }
   },
   getters: {
     getProcessing: state => {

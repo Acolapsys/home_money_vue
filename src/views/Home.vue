@@ -1,7 +1,7 @@
 <template>
   <v-card flat>
     <v-card-title>
-      <h2 class="display-1">{{'Menu_Bill' | localize}}</h2>
+      <h2 class="display-1">{{ 'Menu_Bill' | localize }}</h2>
       <v-spacer></v-spacer>
       <v-btn color="light-blue" dark @click="refresh">
         <v-icon>mdi-refresh</v-icon>
@@ -19,11 +19,16 @@
 </template>
 
 <script>
-import HomeBill from "@/components/HomeBill";
-import HomeCurrency from "@/components/HomeCurrency";
+import HomeBill from '@/components/HomeBill'
+import HomeCurrency from '@/components/HomeCurrency'
 
 export default {
-  name: "home",
+  metaInfo() {
+    return {
+      title: this.$title('Menu_Bill')
+    }
+  },
+  name: 'home',
   data: () => ({
     loading: true,
     currency: null
@@ -33,18 +38,17 @@ export default {
     HomeCurrency
   },
   async mounted() {
-    this.currency = await this.$store.dispatch("fetchCurrency");
-    this.currency.rates["EUR"] = 1;
-    this.loading = false;
+    this.currency = await this.$store.dispatch('fetchCurrency')
+    this.currency.rates['EUR'] = 1
+    this.loading = false
   },
   methods: {
     async refresh() {
       this.loading = true
-      this.currency = await this.$store.dispatch("fetchCurrency");
-      this.currency.rates["EUR"] = 1;
-      this.loading = false;
-
+      this.currency = await this.$store.dispatch('fetchCurrency')
+      this.currency.rates['EUR'] = 1
+      this.loading = false
     }
   }
-};
+}
 </script>

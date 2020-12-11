@@ -1,6 +1,5 @@
 import store from '@/store'
 
-
 export default function dateFilter(value, format = 'date') {
   const options = {}
   if (format.includes('date')) {

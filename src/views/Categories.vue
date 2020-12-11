@@ -1,20 +1,22 @@
 <template>
   <v-card flat>
     <v-card-title>
-      <h2 class="display-1">{{'Category' | localize}}</h2>
+      <h2 class="display-1">{{ 'Category' | localize }}</h2>
     </v-card-title>
     <v-divider></v-divider>
     <v-container fluid>
       <v-row>
-        <CategoryCreate @created="addNewCategory"/>
-        <CategoryEdit 
-        v-if="categories.length"
-        @updated="updateCategory"
-        :categories="categories"/>
+        <CategoryCreate @created="addNewCategory" />
+        <CategoryEdit
+          v-if="categories.length"
+          @updated="updateCategory"
+          :categories="categories"
+        />
         <v-col v-else sm="12" md="6">
-        <p class=" pa-4 headline text--secondary text-center">{{'Message_NoCategories' | localize}}</p>
+          <p class=" pa-4 headline text--secondary text-center">
+            {{ 'Message_NoCategories' | localize }}
+          </p>
         </v-col>
-        
       </v-row>
     </v-container>
   </v-card>
@@ -23,6 +25,11 @@
 import CategoryCreate from '@/components/CategoryCreate'
 import CategoryEdit from '@/components/CategoryEdit'
 export default {
+  metaInfo() {
+    return {
+      title: this.$title('Menu_Categories')
+    }
+  },
   data() {
     return {
       categories: [],
@@ -30,7 +37,8 @@ export default {
     }
   },
   components: {
-    CategoryCreate, CategoryEdit
+    CategoryCreate,
+    CategoryEdit
   },
   async mounted() {
     this.categories = await this.$store.dispatch('fetchCategories')

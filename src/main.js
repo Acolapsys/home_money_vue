@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuelidate from 'vuelidate'
+import VueMeta from 'vue-meta'
 import App from './App.vue'
 import router from './router'
 import dateFilter from '@/filters/date.filter'
@@ -7,6 +8,8 @@ import currencyFilter from '@/filters/currency.filter'
 import localizeFilter from '@/filters/localize.filter'
 import store from './store'
 import vuetify from './plugins/vuetify'
+
+import titlePlugin from './plugins/title.plugin'
 import Loader from '@/components/app/Loader'
 import './registerServiceWorker'
 
@@ -21,6 +24,8 @@ Vue.filter('date', dateFilter)
 Vue.filter('currency', currencyFilter)
 Vue.filter('localize', localizeFilter)
 Vue.component('Loader', Loader)
+Vue.use(VueMeta)
+Vue.use(titlePlugin)
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCiUmoyooJI2cZO9kol6l7BU8ZVtMjbO3I',

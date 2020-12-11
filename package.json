@@ -1,5 +1,5 @@
 {
-  "name": "crm_minin",
+  "name": "home_money",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,10 +10,12 @@
   "dependencies": {
     "core-js": "^3.7.0",
     "firebase": "^8.1.1",
+    "firebase-tools": "^8.18.1",
     "lodash": "^4.17.20",
     "register-service-worker": "^1.7.1",
     "vue": "^2.6.11",
     "vue-google-charts": "^0.3.3",
+    "vue-meta": "^2.4.0",
     "vue-router": "^3.4.9",
     "vuelidate": "^0.7.6",
     "vuetify": "^2.2.11",
